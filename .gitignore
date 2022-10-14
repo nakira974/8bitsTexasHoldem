@@ -819,3 +819,8 @@ $RECYCLE.BIN/
 # Additional files built by Visual Studio
 
 # End of https://www.toptal.com/developers/gitignore/api/csharp,windows,rider,node,visualstudio
+
+ASP.NETCoreWebApplication1/bin
+ASP.NETCoreWebApplication1/obj
+
+ASP.NETCoreWebApplication1/ClientApp/node_modules
