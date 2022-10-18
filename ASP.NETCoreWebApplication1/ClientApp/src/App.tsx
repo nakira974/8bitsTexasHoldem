@@ -2,9 +2,9 @@ import * as React from 'react'
 import { useErrorBoundary } from 'use-error-boundary'
 import { Route, useRoute, Redirect } from 'wouter'
 
-import { Global, Loading, Page, DemoPanel, Dot, Error } from './styles'
 
 import * as demos from './demos'
+import {DemoPanel, Dot, Global, Loading, Page, Error} from "./styles";
 
 const DEFAULT_COMPONENT_NAME = 'Portals'
 const visibleComponents: any = Object.entries(demos).reduce((acc, [name, item]) => ({ ...acc, [name]: item }), {})
@@ -49,6 +49,7 @@ export default function App() {
   return (
     <>
       <Global />
+        
       <Page>
         <React.Suspense fallback={<Loading />}>
           <Route path="/" children={<Redirect to={`/demo/${DEFAULT_COMPONENT_NAME}`} />} />

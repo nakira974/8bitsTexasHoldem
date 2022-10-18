@@ -49,7 +49,6 @@
     </ItemGroup>
     <ItemGroup>
       <TypeScriptCompile Include="ClientApp\scripts\Article.ts" />
-      <None Include="ClientApp\src\Cylinder3d.jsx" />
       <TypeScriptCompile Include="ClientApp\src\App.tsx" />
       <TypeScriptCompile Include="ClientApp\src\index.tsx" />
       <TypeScriptCompile Include="ClientApp\typings\global.d.ts" />
