@@ -8,17 +8,17 @@ import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import {NavMenu} from "./components/NavMenu";
 import {Home} from "./components/Home";
 import {Counter} from "./components/Counter";
-import {FetchData} from "./components/FetchData";
-import {Layout} from "./components/Layout";
-import AuthorizeRoute from './components/api-authorization/AuthorizeRoute';
+
 import ApiAuthorizationRoutes from './components/api-authorization/ApiAuthorizationRoutes';
 import { ApplicationPaths } from './components/api-authorization/ApiAuthorizationConstants';
+import { Container } from 'reactstrap';
 const baseUrl = document.getElementsByTagName('base')[0].getAttribute('href');
 
 //<AuthorizeRoute path='/fetch-data' children={FetchData}/>
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <BrowserRouter basename={baseUrl}>
             <NavMenu/>
+        <Container>
             <Routes>
                 <Route path="/" element={<Home/>}/>
                 
@@ -29,6 +29,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                 <Route path={ApplicationPaths.ApiAuthorizationPrefix} element={<ApiAuthorizationRoutes/>}/>
 
             </Routes>
+        </Container>
     </BrowserRouter>)
 
 serviceWorkerRegistration.unregister();

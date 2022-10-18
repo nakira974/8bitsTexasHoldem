@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import React, { useState, useEffect, useRef, useMemo } from 'react'
+import { useState, useEffect, useRef, useMemo } from 'react'
 import { Canvas } from '@react-three/fiber'
 
 const redMaterial = new THREE.MeshBasicMaterial({ color: 'aquamarine', toneMapped: false })
