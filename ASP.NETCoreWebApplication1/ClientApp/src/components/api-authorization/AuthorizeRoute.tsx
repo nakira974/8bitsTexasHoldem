@@ -1,16 +1,19 @@
-import React from 'react'
+﻿import * as React from 'react'
 import { Component } from 'react'
 import { Route, Navigate } from 'react-router-dom'
 import { ApplicationPaths, QueryParameterNames } from './ApiAuthorizationConstants'
 import authService from './AuthorizeService'
 
-export default class AuthorizeRoute extends Route {
+export default class AuthorizeRoute extends Component{
+    private _subscription :any;
     constructor(props) {
         super(props);
 
         this.state = {
             ready: false,
-            authenticated: false
+            authenticated: false,
+
+
         };
     }
 
@@ -24,7 +27,7 @@ export default class AuthorizeRoute extends Route {
     }
 
     render() {
-        const { ready, authenticated } = this.state;
+        let  ready, authenticated  = this.state;
         var link = document.createElement("a");
         link.href = this.props.path;
         const returnUrl = `${link.protocol}//${link.host}${link.pathname}${link.search}${link.hash}`;
@@ -32,15 +35,15 @@ export default class AuthorizeRoute extends Route {
         if (!ready) {
             return <div></div>;
         } else {
-            const { component: Component, ...rest } = this.props;
+            const { children: Component, ...rest } = this.props;
             return <Route {...rest}
-                render={(props) => {
-                    if (authenticated) {
-                        return <Component {...props} />
-                    } else {
-                        return <Navigate to={redirectUrl} replace/>
-                    }
-                }} />
+                          element={(props) => {
+                              if (authenticated) {
+                                  return <Component {...props} />
+                              } else {
+                                  return <Navigate to={redirectUrl} replace/>
+                              }
+                          }} />
         }
     }
 
