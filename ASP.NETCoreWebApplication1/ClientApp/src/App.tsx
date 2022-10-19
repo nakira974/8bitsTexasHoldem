@@ -52,7 +52,7 @@ export default function App() {
         
       <Page>
         <React.Suspense fallback={<Loading />}>
-          <Route path="/" children={<Redirect to={`/demo/${DEFAULT_COMPONENT_NAME}`} />} />
+          <Route path="/games" children={<Redirect to={`/demo/${DEFAULT_COMPONENT_NAME}`} />} />
           <Route path="/demo/:name">
             <Demo />
           </Route>
