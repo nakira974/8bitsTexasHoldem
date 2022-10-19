@@ -50,6 +50,7 @@
     <ItemGroup>
       <TypeScriptCompile Include="ClientApp\scripts\Article.ts" />
       <TypeScriptCompile Include="ClientApp\src\App.tsx" />
+      <TypeScriptCompile Include="ClientApp\src\components\api-authorization\ApiAuthorizationConstants.tsx" />
       <TypeScriptCompile Include="ClientApp\src\components\api-authorization\ApiAuthorizationRoutes.tsx" />
       <TypeScriptCompile Include="ClientApp\src\components\api-authorization\Login.tsx" />
       <TypeScriptCompile Include="ClientApp\src\components\api-authorization\LoginMenu.tsx" />
