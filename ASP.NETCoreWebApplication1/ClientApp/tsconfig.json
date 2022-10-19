@@ -1,10 +1,13 @@
 ﻿{
   "compileOnSave": true,
+  "ts-node": {
+    "pretty": true
+  },
   "compilerOptions": {
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
-    "allowJs": false,
+    "allowJs": true,
     "skipLibCheck": false,
-    "esModuleInterop": false,
+    "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
@@ -21,5 +24,12 @@
     "outDir": "src",
     "jsx": "react"
   },
-  "include": ["./src/*", "./typings/*.d.ts", "../packages/*"]
+  "include": [
+    "./src/*",
+    "./src/demos/*.tsx",
+    "./src/components/*.tsx",
+    "./src/components/api-authorization/*.tsx",
+    "./typings/*.d.ts",
+    "../packages/*"
+  ]
 }

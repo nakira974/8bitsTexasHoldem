@@ -9,11 +9,11 @@ import {NavMenu} from "./components/NavMenu";
 import {Home} from "./components/Home";
 import {Counter} from "./components/Counter";
 
-import {ApiAuthorizationRoutes} from './components/api-authorization/ApiAuthorizationRoutes';
-import { ApplicationPaths } from './components/api-authorization/ApiAuthorizationConstants';
+import ApiAuthorizationRoutes from './components/api-authorization/ApiAuthorizationRoutes';
+import * as ApiAuthorizationConstants from './components/api-authorization/ApiAuthorizationConstants';
 import { Container } from 'reactstrap';
 const baseUrl = document.getElementsByTagName('base')[0].getAttribute('href');
-
+let apiAuthorizationPrefix : string = ApiAuthorizationConstants.ApplicationPaths.ApiAuthorizationPrefix;
 //<AuthorizeRoute path='/fetch-data' children={FetchData}/>
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <BrowserRouter basename={baseUrl}>
@@ -26,7 +26,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                 
                 <Route path='/counter'  element={<Counter/>}/>
                 
-                <Route path={ApplicationPaths.ApiAuthorizationPrefix} element={<ApiAuthorizationRoutes/>}/>
+                <Route path={apiAuthorizationPrefix} element={<ApiAuthorizationRoutes/>}/>
 
             </Routes>
         </Container>

@@ -1,11 +1,16 @@
-import { Component, Fragment } from 'react';
-import { Route } from "react-router-dom";
+﻿import { Component, Fragment } from 'react';
+import { Route } from 'react-router';
 import { Login } from './Login'
 import { Logout } from './Logout'
 import { ApplicationPaths, LoginActions, LogoutActions } from './ApiAuthorizationConstants';
 
-export const ApiAuthorizationRoutes = () =>  {
-    
+export default class ApiAuthorizationRoutes extends Component {
+
+    constructor(props) {
+        super(props);
+    }
+
+    render () {
         return(
             <Fragment>
                 <Route path={ApplicationPaths.Login} element={() => loginAction(LoginActions.Login)} />
@@ -17,7 +22,7 @@ export const ApiAuthorizationRoutes = () =>  {
                 <Route path={ApplicationPaths.LogOutCallback} element={() => logoutAction(LogoutActions.LogoutCallback)} />
                 <Route path={ApplicationPaths.LoggedOut} element={() => logoutAction(LogoutActions.LoggedOut)} />
             </Fragment>);
-        
+    }
 }
 
 function loginAction(name){

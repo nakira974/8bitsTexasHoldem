@@ -1,10 +1,10 @@
 import React from 'react'
 import { Component } from 'react'
-import { Route, Navigate } from 'react-router-dom'
+import { Route, Redirect } from 'react-router-dom'
 import { ApplicationPaths, QueryParameterNames } from './ApiAuthorizationConstants'
 import authService from './AuthorizeService'
 
-export default class AuthorizeRoute extends Route {
+export default class AuthorizeRoute extends Component {
     constructor(props) {
         super(props);
 
@@ -38,7 +38,7 @@ export default class AuthorizeRoute extends Route {
                     if (authenticated) {
                         return <Component {...props} />
                     } else {
-                        return <Navigate to={redirectUrl} replace/>
+                        return <Redirect to={redirectUrl} />
                     }
                 }} />
         }

@@ -1,13 +1,10 @@
-import  { Component, Fragment } from 'react';
+import React, { Component, Fragment } from 'react';
 import { NavItem, NavLink } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import authService from './AuthorizeService';
 import { ApplicationPaths } from './ApiAuthorizationConstants';
 
 export class LoginMenu extends Component {
-    
-    private _subscription : any;
-    
     constructor(props) {
         super(props);
 
@@ -35,7 +32,7 @@ export class LoginMenu extends Component {
     }
 
     render() {
-        let  isAuthenticated, userName  = this.state;
+        const { isAuthenticated, userName } = this.state;
         if (!isAuthenticated) {
             const registerPath = `${ApplicationPaths.Register}`;
             const loginPath = `${ApplicationPaths.Login}`;
