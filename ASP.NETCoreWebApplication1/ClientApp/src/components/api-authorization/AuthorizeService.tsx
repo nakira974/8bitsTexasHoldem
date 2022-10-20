@@ -1,4 +1,4 @@
-import { UserManager, WebStorageStateStore } from 'oidc-client';
+﻿import { UserManager, WebStorageStateStore } from 'oidc-client';
 import { ApplicationPaths, ApplicationName } from './ApiAuthorizationConstants';
 
 export class AuthorizeService {
@@ -6,6 +6,7 @@ export class AuthorizeService {
     _nextSubscriptionId = 0;
     _user = null;
     _isAuthenticated = false;
+    userManager : UserManager;
 
     // By default pop ups are disabled because they don't work properly on Edge.
     // If you want to enable pop up authentication simply set this flag to false.
@@ -22,13 +23,13 @@ export class AuthorizeService {
         }
 
         await this.ensureUserManagerInitialized();
-        const user = await this.userManager.getUser();
+        const user = await this.getUser();
         return user && user.profile;
     }
 
     async getAccessToken() {
         await this.ensureUserManagerInitialized();
-        const user = await this.userManager.getUser();
+        const user = await this.getUser();
         return user && user.access_token;
     }
 
@@ -43,7 +44,7 @@ export class AuthorizeService {
     async signIn(state) {
         await this.ensureUserManagerInitialized();
         try {
-            const silentUser = await this.userManager.signinSilent(this.createArguments());
+            const silentUser = await this.userManager.signinSilent(this.createArguments(state));
             this.updateState(silentUser);
             return this.success(state);
         } catch (silentError) {
@@ -55,7 +56,7 @@ export class AuthorizeService {
                     throw new Error('Popup disabled. Change \'AuthorizeService.js:AuthorizeService._popupDisabled\' to false to enable it.')
                 }
 
-                const popUpUser = await this.userManager.signinPopup(this.createArguments());
+                const popUpUser = await this.userManager.signinPopup(this.createArguments(state));
                 this.updateState(popUpUser);
                 return this.success(state);
             } catch (popUpError) {
@@ -102,7 +103,7 @@ export class AuthorizeService {
                 throw new Error('Popup disabled. Change \'AuthorizeService.js:AuthorizeService._popupDisabled\' to false to enable it.')
             }
 
-            await this.userManager.signoutPopup(this.createArguments());
+            await this.userManager.signoutPopup(this.createArguments(state));
             this.updateState(undefined);
             return this.success(state);
         } catch (popupSignOutError) {
