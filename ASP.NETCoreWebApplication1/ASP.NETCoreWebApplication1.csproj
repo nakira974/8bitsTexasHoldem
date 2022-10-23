@@ -54,6 +54,7 @@
       <TypeScriptCompile Include="ClientApp\src\components\api-authorization\Login.tsx" />
       <TypeScriptCompile Include="ClientApp\src\components\api-authorization\LoginMenu.tsx" />
       <TypeScriptCompile Include="ClientApp\src\components\api-authorization\Logout.tsx" />
+      <TypeScriptCompile Include="ClientApp\src\components\RoentgenGenerator.tsx" />
       <TypeScriptCompile Include="ClientApp\src\index.tsx" />
       <TypeScriptCompile Include="ClientApp\typings\global.d.ts" />
       <TypeScriptCompile Include="ClientApp\vite.config.ts" />

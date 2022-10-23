@@ -12,6 +12,8 @@ import {Counter} from "./components/Counter";
 import {ApiAuthorizationRoutes} from './components/api-authorization/ApiAuthorizationRoutes';
 import { ApplicationPaths } from './components/api-authorization/ApiAuthorizationConstants';
 import { Container } from 'reactstrap';
+import {MeasureComponent, getMeasures} from "./components/RoentgenGenerator";
+
 const baseUrl = document.getElementsByTagName('base')[0].getAttribute('href');
 
 //<AuthorizeRoute path='/fetch-data' children={FetchData}/>
@@ -25,7 +27,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                 <Route path="/games" element={<App/>}/>
                 
                 <Route path='/counter'  element={<Counter/>}/>
-                
+
+                <Route path='/measure_simulator' element={<MeasureComponent measures={getMeasures()}/>}/>
+
                 <Route path={ApplicationPaths.ApiAuthorizationPrefix} element={<ApiAuthorizationRoutes/>}/>
 
             </Routes>

@@ -41,6 +41,9 @@ export class NavMenu extends Component {
                   <NavLink tag={Link} className="text-dark" to="/games">Games</NavLink>
                 </NavItem>
                 <NavItem>
+                  <NavLink tag={Link} className="text-dark" to="/measure_simulator">Roentgens</NavLink>
+                </NavItem>
+                <NavItem>
                   <NavLink tag={Link} className="text-dark" to="/fetch-data">Fetch data</NavLink>
                 </NavItem>
                 <LoginMenu>
