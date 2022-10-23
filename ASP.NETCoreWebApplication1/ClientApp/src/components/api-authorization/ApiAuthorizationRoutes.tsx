@@ -3,10 +3,12 @@ import { Route } from "react-router-dom";
 import { Login } from './Login'
 import { Logout } from './Logout'
 import { ApplicationPaths, LoginActions, LogoutActions } from './ApiAuthorizationConstants';
+import {extend} from "@react-three/fiber";
 
-export const ApiAuthorizationRoutes = () =>  {
+export class ApiAuthorizationRoutes extends  Component{
     
-        return(
+        render(){
+            return(
             <Fragment>
                 <Route path={ApplicationPaths.Login} element={() => loginAction(LoginActions.Login)} />
                 <Route path={ApplicationPaths.LoginFailed} element={() => loginAction(LoginActions.LoginFailed)} />
@@ -16,7 +18,8 @@ export const ApiAuthorizationRoutes = () =>  {
                 <Route path={ApplicationPaths.LogOut} element={() => logoutAction(LogoutActions.Logout)} />
                 <Route path={ApplicationPaths.LogOutCallback} element={() => logoutAction(LogoutActions.LogoutCallback)} />
                 <Route path={ApplicationPaths.LoggedOut} element={() => logoutAction(LogoutActions.LoggedOut)} />
-            </Fragment>);
+            </Fragment>)
+        }
         
 }
 

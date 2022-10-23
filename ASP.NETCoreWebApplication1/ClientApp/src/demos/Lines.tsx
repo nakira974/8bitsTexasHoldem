@@ -1,4 +1,5 @@
-import React, { useRef, useEffect, useState, useCallback, useContext, useMemo } from 'react'
+import  { useRef, useEffect, useState, useCallback, useContext, useMemo } from 'react'
+import * as React from 'react'
 import { extend, Canvas, useThree, ReactThreeFiber } from '@react-three/fiber'
 import { OrbitControls } from 'three-stdlib'
 extend({ OrbitControls })
@@ -115,7 +116,7 @@ function Controls({ children }: any) {
     return () => current.removeEventListener('change', onChange)
   }, [invalidate])
 
-  return (
+    return (
     <>
       <orbitControls ref={ref} args={[camera, gl.domElement]} enableDamping enabled={api[0]} />
       <camContext.Provider value={api as any}>{children}</camContext.Provider>

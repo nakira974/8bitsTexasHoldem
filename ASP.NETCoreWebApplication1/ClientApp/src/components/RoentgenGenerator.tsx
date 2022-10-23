@@ -143,11 +143,6 @@ class LineChart extends React.Component<LineChartProps, {}> {
     componentWillUnmount() {
         this.chart.destroy();
     }
-
-    destroyChart() {
-        let myChart = document.getElementById("myChart");
-        myChart.parentNode.removeChild(myChart);
-    }
     
     buildChart = () => {
 
@@ -160,6 +155,7 @@ class LineChart extends React.Component<LineChartProps, {}> {
 
         this.chart = new Chart(ctx, {
             type: "line",
+            
             data: {
                 //Bring in data
                 labels: this.props.measures.map(
@@ -171,13 +167,22 @@ class LineChart extends React.Component<LineChartProps, {}> {
                         data: this.props.measures.map(
                             (measure) => measure.roentgen_level
                         ),
+                        borderColor: 'rgb(75, 192, 192)'
                     },
                 ],
             },
             options: {
-                //Customize chart options
-                scales:{}
-            },
+                animations: {
+                    tension: {
+                        duration: 200,
+                        easing: 'linear',
+                        from: 1,
+                        to: 0,
+                        loop: true
+                    }
+                },
+             scales : {}
+            }
         });
     };
 
