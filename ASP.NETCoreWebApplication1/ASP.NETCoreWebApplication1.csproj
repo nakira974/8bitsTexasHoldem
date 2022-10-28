@@ -48,7 +48,6 @@
         <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
     </ItemGroup>
     <ItemGroup>
-      <TypeScriptCompile Include="ClientApp\scripts\Article.ts" />
       <TypeScriptCompile Include="ClientApp\src\App.tsx" />
       <TypeScriptCompile Include="ClientApp\src\index.tsx" />
       <TypeScriptCompile Include="ClientApp\typings\global.d.ts" />
@@ -56,6 +55,7 @@
       <TypeScriptCompile Remove="ClientApp\src\models\Props.ts" />
     </ItemGroup>
     <ItemGroup>
+      <Folder Include="ClientApp\scripts" />
       <Folder Include="ClientApp\src\models" />
     </ItemGroup>
 
