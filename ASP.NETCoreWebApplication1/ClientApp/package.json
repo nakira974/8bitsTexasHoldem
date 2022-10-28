@@ -43,7 +43,8 @@
     "workbox-strategies": "^6.5.4",
     "workbox-streams": "^6.5.4",
     "wouter": "^2.8.0-alpha.2",
-    "zustand": "^3.7.1"
+    "zustand": "^3.7.1",
+    "drei" : "^2.2.21"
   },
   "devDependencies": {
     "@types/dat.gui": "^0.7.7",

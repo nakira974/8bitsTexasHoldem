@@ -55,7 +55,6 @@
       <TypeScriptCompile Remove="ClientApp\src\models\Props.ts" />
     </ItemGroup>
     <ItemGroup>
-      <Folder Include="ClientApp\scripts" />
       <Folder Include="ClientApp\src\models" />
     </ItemGroup>
 
