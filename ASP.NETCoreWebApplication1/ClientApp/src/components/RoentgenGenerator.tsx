@@ -167,7 +167,8 @@ class LineChart extends React.Component<LineChartProps, {}> {
                         data: this.props.measures.map(
                             (measure) => measure.roentgen_level
                         ),
-                        borderColor: 'rgb(75, 192, 192)'
+                        borderColor: 'rgb(75, 192, 192)',
+                        backgroundColor:  'rgb(227,38,54)',
                     },
                 ],
             },

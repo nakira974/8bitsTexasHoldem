@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import * as React from 'react'
 import { Canvas } from '@react-three/fiber'
 
 function Sphere() {
-  const [hovered, set] = useState(false)
+  const [hovered, set] = React.useState(false)
   console.log('sphere', hovered)
   return (
     <mesh onPointerOver={(e) => (e.stopPropagation(), set(true))} onPointerOut={(e) => set(false)}>
@@ -13,7 +13,7 @@ function Sphere() {
 }
 
 function Circle() {
-  const [hovered, set] = useState(false)
+  const [hovered, set] = React.useState(false)
   console.log('circle', hovered)
   return (
     <mesh onPointerOver={(e) => (e.stopPropagation(), set(true))} onPointerOut={(e) => set(false)}>

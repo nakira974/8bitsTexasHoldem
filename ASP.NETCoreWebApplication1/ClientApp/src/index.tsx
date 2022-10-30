@@ -13,8 +13,11 @@ import {ApiAuthorizationRoutes} from './components/api-authorization/ApiAuthoriz
 import { ApplicationPaths } from './components/api-authorization/ApiAuthorizationConstants';
 import { Container } from 'reactstrap';
 import {MeasureComponent, getMeasures} from "./components/RoentgenGenerator";
+import * as THREE from 'three'
+import {MySprite} from "./components/AsepriteAssetLoader";
 
 const baseUrl = document.getElementsByTagName('base')[0].getAttribute('href');
+
 
 //<AuthorizeRoute path='/fetch-data' children={FetchData}/>
 ReactDOM.createRoot(document.getElementById('root')!).render(
@@ -29,9 +32,11 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                 <Route path='/counter'  element={<Counter/>}/>
 
                 <Route path='/measure_simulator' element={<MeasureComponent measures={getMeasures()}/>}/>
+                
+                <Route path='/texas_holdem' element={<MySprite/>}/>
 
                 <Route path={ApplicationPaths.ApiAuthorizationPrefix} element={<ApiAuthorizationRoutes/>}/>
-
+                
             </Routes>
         </Container>
     </BrowserRouter>)
