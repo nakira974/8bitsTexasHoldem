@@ -63,22 +63,63 @@ const TexturedQuad = ({ scale, position }) => {
 
     return (
         <group ref={group}>
-            <mesh position={[0.5, 0, -0.5]}>
-                <planeBufferGeometry attach="geometry" args={[1, 1]} />
-                <meshBasicMaterial side={THREE.FrontSide} transparent={true} attach="material" map={front_side_texture} />
-            </mesh>
-            <mesh position={[0.5, 0, -0.5]}>
-                <planeBufferGeometry attach="geometry" args={[1, 1]} />
-                <meshBasicMaterial side={THREE.BackSide} transparent={true} attach="material" map={back_side_texture} />
-            </mesh>
-            <mesh position={[-0.5, 0, 0.5]}>
-                <planeBufferGeometry attach="geometry" args={[1, 1]} />
-                <meshBasicMaterial side={THREE.FrontSide} transparent={true} attach="material" map={front_side_texture} />
-            </mesh>
-            <mesh position={[-0.5, 0, 0.5]}>
-                <planeBufferGeometry attach="geometry" args={[1, 1]} />
-                <meshBasicMaterial side={THREE.BackSide} transparent={true} attach="material" map={back_side_texture} />
-            </mesh>
+
+            {sides ==  THREE.DoubleSide  &&
+
+                <>
+                    <mesh position={[0.5, 0, -0.5]}>
+                        <planeBufferGeometry attach="geometry" args={[1, 1]}/>
+                        <meshBasicMaterial side={THREE.FrontSide} transparent={true} attach="material"
+                                           map={front_side_texture}/>
+                    </mesh>
+                    <mesh position={[0.5, 0, -0.5]}>
+                        <planeBufferGeometry attach="geometry" args={[1, 1]}/>
+                        <meshBasicMaterial side={THREE.BackSide} transparent={true} attach="material"
+                                           map={back_side_texture}/>
+                    </mesh>
+                    <mesh position={[-0.5, 0, 0.5]}>
+                        <planeBufferGeometry attach="geometry" args={[1, 1]}/>
+                        <meshBasicMaterial side={THREE.FrontSide} transparent={true} attach="material"
+                                           map={front_side_texture}/>
+                    </mesh>
+                    <mesh position={[-0.5, 0, 0.5]}>
+                        <planeBufferGeometry attach="geometry" args={[1, 1]}/>
+                        <meshBasicMaterial side={THREE.BackSide} transparent={true} attach="material"
+                                           map={back_side_texture}/>
+                    </mesh>
+                </>
+            }
+
+            {sides ==  THREE.FrontSide &&
+                <>
+                    <mesh position={[0.5, 0, -0.5]}>
+                        <planeBufferGeometry attach="geometry" args={[1, 1]}/>
+                        <meshBasicMaterial side={THREE.FrontSide} transparent={true} attach="material"
+                                           map={front_side_texture}/>
+                    </mesh>
+                    <mesh position={[-0.5, 0, 0.5]}>
+                        <planeBufferGeometry attach="geometry" args={[1, 1]}/>
+                        <meshBasicMaterial side={THREE.FrontSide} transparent={true} attach="material"
+                                           map={front_side_texture}/>
+                    </mesh>
+                </>
+            }
+
+            {sides ==  THREE.BackSide &&
+                <>
+                    <mesh position={[0.5, 0, -0.5]}>
+                        <planeBufferGeometry attach="geometry" args={[1, 1]}/>
+                        <meshBasicMaterial side={THREE.BackSide} transparent={true} attach="material"
+                                           map={back_side_texture}/>
+                    </mesh>
+                    <mesh position={[-0.5, 0, 0.5]}>
+                        <planeBufferGeometry attach="geometry" args={[1, 1]}/>
+                        <meshBasicMaterial side={THREE.BackSide} transparent={true} attach="material"
+                                           map={back_side_texture}/>
+                    </mesh>
+                </>
+            }
+            
             <sprite position={[-0.5, 0, -0.5]}>
                 <spriteMaterial transparent={true} map={front_side_texture} />
             </sprite>
