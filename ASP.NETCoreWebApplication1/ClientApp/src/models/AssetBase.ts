@@ -7,6 +7,20 @@ import {Guid} from "guid-typescript";
  * @description Describe an Asset and all associated properties and methods
  **/
 export abstract class AssetBase{
+
+    /**
+     * @description Get the name of the AssetBase instance
+     */
+    get name(): string {
+        return this._name;
+    }
+
+    /**
+     * @description Get the file path of the AssetBase instance
+     */
+    get path(): string {
+        return this._path;
+    }
     
     /**
      * @description Name of the AssetBase instance

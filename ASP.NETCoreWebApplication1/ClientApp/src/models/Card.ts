@@ -154,6 +154,15 @@ export class Card extends AssetBase{
      */
     private readonly _number : CardNumber;
     
+    /**@description Default constructor of Card, 
+     * it generates from the number and the family card the file path to the right resource
+     * @param cardNumber Number of the instantiated card (Ten, Two, Jack...)
+     * @param cardType Type of the instantiated card (Spade, Diamond...)
+     * @example 
+     * import {CardNumber, CardType, Card} from '@lkhsof/cardsGame.models'
+     * let card = new Card(CardNumber.Two, CardType.Diamond);
+     * console.log(card.path);
+     * //prints ~/resources/DIAMOND_TWO.png*/
     constructor(cardNumber : CardNumber, cardType : CardType) {
         let cardName : string = cardType.toString().toUpperCase()+"_"+cardNumber.toString().toUpperCase();
         let cardFilePath : string = cardName+".png";
