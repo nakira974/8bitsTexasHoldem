@@ -1,5 +1,5 @@
 import {AssetBase} from "./AssetBase";
-import {Card, CardNumber, CardType} from "./Card";
+import {AllowedCardNumbers, Card, CardNumber, CardType, AllowedCardTypes} from "./Card";
 
 /**
  * @author nakira974
@@ -28,12 +28,14 @@ export class CardsDeck extends AssetBase{
     constructor(name: string, path: string) {
         
         super(name, path);
-
+        this._cards = [];
+       
         for (const cardType in CardType) {
             const currentCardType: CardType = CardType[cardType as keyof typeof CardType];
             for(const cardNumber in CardNumber){
                 const currentCardNumber: CardNumber = CardNumber[cardNumber as keyof typeof CardNumber];
-                this._cards.push(new Card(currentCardNumber, currentCardType));
+                let currentCard : Card = new Card(currentCardNumber, currentCardType);
+                this._cards.push(currentCard);
             }
         }
     }

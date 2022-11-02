@@ -1,4 +1,5 @@
 import {GameBase} from "./GameBase";
+import {CardsDeck} from "./CardsDeck";
 
 
 /**
@@ -7,6 +8,9 @@ import {GameBase} from "./GameBase";
  * @description Describe a poker 'Texas Holdem' game
  **/
 export class TexasHoldem extends GameBase{
+    
+    public readonly deck : CardsDeck;
+    
     end() {
     }
 
@@ -28,7 +32,7 @@ export class TexasHoldem extends GameBase{
      */
     constructor(maximumAllowedPlayerCount: number) {
         super("Texas_Holdem", maximumAllowedPlayerCount);
-        
+        let deck = new CardsDeck("Texas_Holdem_Deck", "");
     }
     
 }

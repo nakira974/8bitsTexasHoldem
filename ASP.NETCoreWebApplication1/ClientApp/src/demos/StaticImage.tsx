@@ -4,14 +4,17 @@ import { useControls } from "leva"
 import { Suspense, useRef } from "react"
 import * as THREE from "three"
 // @ts-ignore
-import bard from "./resources/heart_ace.png"
+import bard from "./resources/HEART_ACE.png"
 // @ts-ignore
-import texture02 from "./resources/red_reversed_card.png"
+import texture02 from "./resources/OTHER_REVERSEFACE.png"
 import {Texture} from "three";
+import {CardsDeck} from "../models/CardsDeck";
 
 
 
 const TexturedQuad = ({ scale, position }) => {
+    let deck = new CardsDeck("CARDS_DECK", "./resources/OTHER_CARDSDECK.png")
+
     const group = useRef()
 
     let front_side_texture: Texture = useLoader(THREE.TextureLoader, bard) as Texture;
