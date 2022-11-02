@@ -92,7 +92,7 @@ export abstract class GameBase {
     /**
      * @description Maximum players allowed for a single game
      */
-    private _maximumPlayerCount: number;
+    private readonly _maximumPlayerCount: number;
 
     /**
      * @description Starts the next round of the game

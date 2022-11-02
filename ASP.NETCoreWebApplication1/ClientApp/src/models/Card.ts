@@ -10,7 +10,7 @@ export enum CardType{
     Heart = 0x0EAB0B,
     Spade = 0x0EAB0C,
     Square = 0x0EAB0D,
-   Other = 0x0EAB0E
+    Other = 0x0EAB0E
 }
 
 /**
@@ -68,7 +68,7 @@ export const AllowedCardNumbers : CardNumber[] = [
 /**
  * @author nakira974
  * @version 1.0.0
- * @description Describe a card game
+ * @description Describe a single card game in the Texas Holdem poker
  **/
 export class Card extends AssetBase{
 
