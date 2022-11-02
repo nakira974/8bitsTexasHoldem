@@ -6,10 +6,15 @@ import {AssetBase} from "./AssetBase";
  * @description Describe the family of a card 
  **/
 export enum CardType{
+    /**@see https://fr.wikipedia.org/wiki/Pique_(carte_%C3%A0_jouer)*/
     Club = 0x0EAB0A,
+    /**@see https://fr.wikipedia.org/wiki/C%C5%93ur_(carte_%C3%A0_jouer)*/
     Heart = 0x0EAB0B,
+    /**@see https://fr.wikipedia.org/wiki/Tr%C3%A8fle_(carte_%C3%A0_jouer)*/
     Spade = 0x0EAB0C,
+    /**@see https://fr.wikipedia.org/wiki/Carreau_(carte_%C3%A0_jouer)*/
     Square = 0x0EAB0D,
+    /**Cards like reversed side or the joker*/ 
     Other = 0x0EAB0E
 }
 
@@ -29,20 +34,35 @@ export const AllowedCardTypes : CardType[]  = [
  * @description Describe the number of a card
  **/
 export enum CardNumber{
+    /** Reversed side of cards */
     ReverseFace = 0x00,
-    Two= 0x02, 
+    /**@see https://fr.wikipedia.org/wiki/Deux_(carte_%C3%A0_jouer)*/
+    Two= 0x02,
+    /**@see https://fr.wikipedia.org/wiki/Trois_(carte_%C3%A0_jouer)*/
     Three = 0x03,
+    /**@see https://fr.wikipedia.org/wiki/Quatre_(carte_%C3%A0_jouer)*/
     Four = 0x04,
+    /**@see https://fr.wikipedia.org/wiki/Cinq_(carte_%C3%A0_jouer)*/
     Five= 0x05,
+    /**@see https://fr.wikipedia.org/wiki/Six_(carte_%C3%A0_jouer)*/
     Six= 0x06,
+    /**@see https://fr.wikipedia.org/wiki/Sept_(carte_%C3%A0_jouer)*/
     Seven = 0x07,
+    /**@see https://fr.wikipedia.org/wiki/Huit_(carte_%C3%A0_jouer)*/
     Height = 0x08,
+    /**@see https://fr.wikipedia.org/wiki/Neuf_(carte_%C3%A0_jouer)*/
     Nine= 0x09,
+    /**@see https://fr.wikipedia.org/wiki/Dix_(carte_%C3%A0_jouer)*/
     Ten = 0x0A,
+    /**@see https://fr.wikipedia.org/wiki/Valet_(carte_%C3%A0_jouer)*/
     Jack = 0x0B,
+    /**@see https://fr.wikipedia.org/wiki/Dame_(carte_%C3%A0_jouer)*/
     Queen = 0x0C,
+    /**@see https://fr.wikipedia.org/wiki/Roi_(carte_%C3%A0_jouer)*/
     King = 0x0D,
+    /**@see https://fr.wikipedia.org/wiki/As_(carte_%C3%A0_jouer)*/
     Ace = 0X0E,
+    /**@see https://fr.wikipedia.org/wiki/Joker_(carte_%C3%A0_jouer)*/
     Joker = 0XFFFFFFFFFFFF
 }
 
@@ -69,6 +89,7 @@ export const AllowedCardNumbers : CardNumber[] = [
  * @author nakira974
  * @version 1.0.0
  * @description Describe a single card game in the Texas Holdem poker
+ * @see https://fr.wikipedia.org/wiki/Carte_%C3%A0_jouer
  **/
 export class Card extends AssetBase{
 

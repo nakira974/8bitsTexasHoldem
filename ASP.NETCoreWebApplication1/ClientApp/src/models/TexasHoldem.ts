@@ -6,6 +6,7 @@ import {CardsDeck} from "./CardsDeck";
  * @author nakira974
  * @version 1.0.0
  * @description Describe a poker 'Texas Holdem' game
+ * @see https://fr.wikipedia.org/wiki/Poker
  **/
 export class TexasHoldem extends GameBase{
     
