@@ -1,4 +1,6 @@
 import {Guid} from "guid-typescript";
+import * as signalR from "@microsoft/signalr";
+import {HubConnection} from "@microsoft/signalr";
 
 /**
  * @author nakira974
@@ -58,6 +60,18 @@ export abstract class GameBase {
         this._maximumPlayerCount = maximumAllowedPlayerCount;
         this._turn = 0;
         this._name = namePrefix+"_"+Guid.create().toString();
+        this.hubConnection = new signalR.HubConnectionBuilder()
+            .withUrl("/"+namePrefix)
+            .configureLogging(signalR.LogLevel.Information)
+            .build();
+
+        // Starts the SignalR connection
+        this.hubConnection.start().then(a => {
+            // Once started, invokes the sendConnectionId in our ChatHub inside our ASP.NET Core application.
+            if (this.hubConnection.connectionId) {
+                this.hubConnection.invoke("Start", this.hubConnection.connectionId, this._name);
+            }
+        });
     }
     /**
      * @description Name of the GameBase instance
@@ -104,5 +118,10 @@ export abstract class GameBase {
      * @description Ends the game by following the rules of the game
      */
     public abstract end();
+
+    /**
+     * @description SignalR connection to the Game's Hub
+     */
+    public readonly hubConnection : HubConnection;
     
 }
