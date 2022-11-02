@@ -1,6 +1,7 @@
 import {Guid} from "guid-typescript";
 import * as signalR from "@microsoft/signalr";
 import {HubConnection} from "@microsoft/signalr";
+import {env} from "process";
 
 /**
  * @author nakira974
@@ -61,8 +62,8 @@ export abstract class GameBase {
         this._turn = 0;
         this._name = namePrefix+"_"+Guid.create().toString();
         this.hubConnection = new signalR.HubConnectionBuilder()
-            .withUrl("/"+namePrefix)
-            .configureLogging(signalR.LogLevel.Information)
+            .withUrl(`https://localhost:${env.ASPNETCORE_HTTPS_PORT}/`+namePrefix)
+            .configureLogging(signalR.LogLevel.Trace)
             .build();
 
         // Starts the SignalR connection
