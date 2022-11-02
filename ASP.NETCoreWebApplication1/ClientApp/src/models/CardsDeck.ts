@@ -7,6 +7,10 @@ import {Card, CardNumber, CardType} from "./Card";
  * @description Describe a game cards deck with all associated operations such as sort() or deal()
  **/
 export class CardsDeck extends AssetBase{
+
+    /**
+     * @description Get the current game cards collection
+     */
     get cards(): Card[] {
         return this._cards;
     }
@@ -15,6 +19,12 @@ export class CardsDeck extends AssetBase{
      * @description Game cards collection
      */
     private readonly _cards : Card[];
+
+    /**
+     * @description Default constructor of a game cards deck
+     * @param name : string Name of the current instance
+     * @param path : string File path to the game cards deck asset
+     */
     constructor(name: string, path: string) {
         
         super(name, path);

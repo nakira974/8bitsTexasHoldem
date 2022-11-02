@@ -6,10 +6,17 @@ import {Guid} from "guid-typescript";
  * @description Describe a Game and all associated properties and methods such as start(), stop()...
  **/
 export abstract class GameBase {
+
+    /**
+     * @description Get the current round count of the game
+     */
     set turn(value: number) {
         this._turn = value;
     }
 
+    /**
+     * @description Get the current player count of the game
+     */
     set playerCount(value: number) {
         this._playerCount = value;
     }
@@ -41,7 +48,12 @@ export abstract class GameBase {
     get maximumPlayerCount(): number {
         return this._maximumPlayerCount;
     }
-    
+
+    /**
+     * @description Default constructor of an GameBase instance
+     * @param namePrefix : string Prefix of the instance name
+     * @param maximumAllowedPlayerCount : number Maximum player count allowed for a single game
+     */
     protected constructor(namePrefix : string , maximumAllowedPlayerCount : number) {
         this._maximumPlayerCount = maximumAllowedPlayerCount;
         this._turn = 0;

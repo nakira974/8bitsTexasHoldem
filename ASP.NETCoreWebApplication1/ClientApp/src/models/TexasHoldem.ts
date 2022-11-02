@@ -1,5 +1,4 @@
 import {GameBase} from "./GameBase";
-import { Guid } from "guid-typescript";
 
 
 /**
@@ -22,6 +21,11 @@ export class TexasHoldem extends GameBase{
 
     suspend(duration: number) {
     }
+
+    /**
+     * @description Default constructor of Texas Holdem game
+     * @param maximumAllowedPlayerCount : number Maximum number of players allowed to play together in the game
+     */
     constructor(maximumAllowedPlayerCount: number) {
         super("Texas_Holdem", maximumAllowedPlayerCount);
         

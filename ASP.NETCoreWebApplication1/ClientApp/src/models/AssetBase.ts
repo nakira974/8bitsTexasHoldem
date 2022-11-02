@@ -18,6 +18,11 @@ export abstract class AssetBase{
      */
     private readonly _path : string;
 
+    /**
+     * @description Default constructor of an AssetBase instance
+     * @param name : string Instance name
+     * @param path : string Asset file path
+     */
     protected constructor(name: string, path: string) {
         this._name = name+"_"+Guid.create().toString();
         this._path = path;
