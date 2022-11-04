@@ -1,8 +1,11 @@
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
 using ASP.NETCoreWebApplication1.Data;
+using ASP.NETCoreWebApplication1.Hubs;
 using ASP.NETCoreWebApplication1.Models;
 using ASP.NETCoreWebApplication1.Services;
 
@@ -26,7 +29,28 @@ builder.Services.AddAuthentication()
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+builder.Services.AddSignalR();
 builder.Services.AddScoped<IGameService<IPokerGameService<IPokerGameService<TexasHoldem>>>, TexasHoldemService>();
+
+
+builder.Services.AddCors(c =>
+{
+    c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin()
+        .AllowAnyMethod()
+        .AllowAnyHeader()
+    );
+});
+
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+        options.JsonSerializerOptions.WriteIndented = true;
+        options.JsonSerializerOptions.AllowTrailingCommas = false;
+        options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+    });
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -54,6 +78,7 @@ app.MapControllerRoute(
 app.MapRazorPages();
 
 app.MapFallbackToFile("index.html");
-;
+app.MapHub<TexasHoldemHub>("api/hubs/Texas_Holdem");
+
 
 app.Run();

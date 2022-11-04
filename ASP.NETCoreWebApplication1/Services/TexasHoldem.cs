@@ -1,6 +1,6 @@
 ﻿namespace ASP.NETCoreWebApplication1.Services;
 
-internal class TexasHoldem : GameBase<IGameService<IPokerGameService<IPokerGameService<TexasHoldem>>>>
+public class TexasHoldem : GameBase<IGameService<IPokerGameService<IPokerGameService<TexasHoldem>>>>
 {
     private static readonly int START_ROUND_CARDS_COUNT = 3; 
     public TexasHoldem(ILogger<IGameService<IPokerGameService<IPokerGameService<TexasHoldem>>>> logger)
@@ -20,7 +20,7 @@ internal class TexasHoldem : GameBase<IGameService<IPokerGameService<IPokerGameS
             {
                 try
                 {
-                    player.HeldCards = _deck?.DrawCards(START_ROUND_CARDS_COUNT)!;
+                    player.HeldCards = new IPokerGameService<IPokerGameService<TexasHoldem>>.CardsDeck(_deck?.DrawCards(START_ROUND_CARDS_COUNT)!);
 
                 }
                 catch (IPokerGameService<IPokerGameService<TexasHoldem>>.InternalPokerGameException e)

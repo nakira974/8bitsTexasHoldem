@@ -1,4 +1,7 @@
-﻿namespace ASP.NETCoreWebApplication1.Services;
+﻿using Microsoft.AspNetCore.SignalR;
+using Microsoft.AspNetCore.SignalR.Protocol;
+
+namespace ASP.NETCoreWebApplication1.Services;
 
 internal sealed class TexasHoldemService : IPokerGameService<TexasHoldem>
 {
@@ -92,5 +95,24 @@ internal sealed class TexasHoldemService : IPokerGameService<TexasHoldem>
             _logger.LogError(e.Message, e);
             throw;
         }
+    }
+
+    public async Task<bool> DisconnectAsync(HubConnectionContext hubConnectionContext)
+    {
+        var result = false;
+        try
+        {
+            await hubConnectionContext.WriteAsync(CloseMessage.Empty);
+            hubConnectionContext.Abort();
+            result = true;
+        }
+        catch (Exception e)
+        {
+            // ReSharper disable once TemplateIsNotCompileTimeConstantProblem
+            _logger.LogError($"Disconnection error for client {hubConnectionContext.User.Identity?.Name}", e);
+            result = false;
+        }
+
+        return result;
     }
 }

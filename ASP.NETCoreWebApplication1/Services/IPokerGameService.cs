@@ -1,9 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
+using ASP.NETCoreWebApplication1.Models;
+using Microsoft.AspNetCore.SignalR;
 
 namespace ASP.NETCoreWebApplication1.Services;
 
-internal interface IPokerGameService<T> : IGameService<IPokerGameService<IPokerGameService<T>>>
+public interface IPokerGameService<T> : IGameService<IPokerGameService<IPokerGameService<T>>>
 {
     IGameService<IPokerGameService<IPokerGameService<T>>> GameServicesImplementation { get; }
 
@@ -37,94 +39,37 @@ internal interface IPokerGameService<T> : IGameService<IPokerGameService<IPokerG
         return await GameServicesImplementation.FinishAsync();
     }
 
+    public new async Task<bool> DisconnectAsync(HubConnectionContext hubConnectionContext)
+    {
+       return await GameServicesImplementation.DisconnectAsync(hubConnectionContext);
+    }
+    
+
 
     internal enum CardNumber
     {
-        /** Reversed side of cards */
-        ReverseFace = 0x00,
-
-        /**@description Two is a playing card value
-     * @see https://fr.wikipedia.org/wiki/Deux_(carte_%C3%A0_jouer)*/
-        Two = 0x02,
-
-        /**@description Three is a playing card value
-     * @see https://fr.wikipedia.org/wiki/Trois_(carte_%C3%A0_jouer)*/
-        Three = 0x03,
-
-        /**@description Four is a playing card value
-     * @see https://fr.wikipedia.org/wiki/Quatre_(carte_%C3%A0_jouer)*/
-        Four = 0x04,
-
-        /**@description Five is a playing card value
-     * @see https://fr.wikipedia.org/wiki/Cinq_(carte_%C3%A0_jouer)*/
-        Five = 0x05,
-
-        /**@description Six is a playing card value
-     * @see https://fr.wikipedia.org/wiki/Six_(carte_%C3%A0_jouer)*/
-        Six = 0x06,
-
-        /**@description Seven is a playing card value
-     * @see https://fr.wikipedia.org/wiki/Sept_(carte_%C3%A0_jouer)*/
-        Seven = 0x07,
-
-        /**@description Height is a playing card value
-     * @see https://fr.wikipedia.org/wiki/Huit_(carte_%C3%A0_jouer)*/
-        Height = 0x08,
-
-        /**@description Nine is a playing card value
-     * @see https://fr.wikipedia.org/wiki/Neuf_(carte_%C3%A0_jouer)*/
-        Nine = 0x09,
-
-        /**@description Ten is a playing card value
-     * @see https://fr.wikipedia.org/wiki/Dix_(carte_%C3%A0_jouer)*/
-        Ten = 0x0A,
-
-        /**@description The valet is a playing card figure. Usually representing a young man, it is often the weakest figure
-     * @see https://fr.wikipedia.org/wiki/Valet_(carte_%C3%A0_jouer)*/
-        Jack = 0x0B,
-
-        /**@description The lady or queen is a playing card figure, usually representing a noble woman
-     * @see https://fr.wikipedia.org/wiki/Dame_(carte_%C3%A0_jouer)*/
-        Queen = 0x0C,
-
-        /**@description The king is a playing card figure, usually representing a noble man
-     * @see https://fr.wikipedia.org/wiki/Roi_(carte_%C3%A0_jouer)*/
-        King = 0x0D,
-
-        /**@description The ace is a playing card value, corresponding to the number 1
-     * @see https://fr.wikipedia.org/wiki/As_(carte_%C3%A0_jouer)*/
-        Ace = 0X0E,
-
-        /**@description The joker is a «generic» card capable of representing one of the other playing cards
-     * @see https://fr.wikipedia.org/wiki/Joker_(carte_%C3%A0_jouer)*/
-        Joker = 1
+       Two = 0x02,
+       Three = 0x03,
+       Four = 0x04,
+       Five = 0x05,
+       Six = 0x06,
+       Seven = 0x07,
+       Height = 0x08,
+       Nine = 0x09,
+       Ten = 0x0A,
+       Jack = 0x0B,
+       Queen = 0x0C,
+       King = 0x0D,
+       Ace = 0X0E,
     }
 
-    /**
- * @author nakira974
- * @version 1.0.0
- * @description Describe the family of a card 
- **/
+
     internal enum CardType
     {
-        /**@description The club (♣) is a playing card sign, one of four French signs with heart, tile and spade.
-     * @see https://fr.wikipedia.org/wiki/Tr%C3%A8fle_(carte_%C3%A0_jouer)*/
-        Club = 0x0EAB0A,
-
-        /**@description The heart (♥) is a playing card sign, one of the four French signs with spade, tile and clover.
-     * @see https://fr.wikipedia.org/wiki/C%C5%93ur_(carte_%C3%A0_jouer)*/
+       Club = 0x0EAB0A,
         Heart = 0x0EAB0B,
-
-        /** @description The spade (♠) is a playing card sign, one of the four French signs with heart, tile and clover.
-    * @see https://fr.wikipedia.org/wiki/Pique_(carte_%C3%A0_jouer)*/
         Spade = 0x0EAB0C,
-
-        /**@description The diamond (♦) is a playing card sign, one of four French signs with spades, hearts and clubs.
-     * @see https://fr.wikipedia.org/wiki/Carreau_(carte_%C3%A0_jouer)*/
         Diamond = 0x0EAB0D,
-
-        /**Cards like reversed side or the joker*/
-        Other = 0x0EAB0E
     }
 
     internal sealed record Card
@@ -199,10 +144,19 @@ internal interface IPokerGameService<T> : IGameService<IPokerGameService<IPokerG
        [JsonPropertyName("player")] internal Player Gambler { get; init; }
     }
 
-    internal sealed record Player
+    public sealed record Player
     {
        internal Player() {}
+
+       internal Player(string connectionId)
+       {
+          ConnectionId = connectionId;
+       }
        
+       [JsonPropertyName("application_user")] internal ApplicationUser User { get; set; }
+       
+       [NotMapped]
+       [JsonPropertyName("connection_id")] internal string ConnectionId { get; set; }
        [JsonPropertyName("user_id")] internal int Id { get; init; }
        [JsonPropertyName("username")] internal string UserName { get; init; }
        [JsonPropertyName("held_cards")] internal IEnumerable<Card> HeldCards { get; set; }

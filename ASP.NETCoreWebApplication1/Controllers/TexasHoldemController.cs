@@ -10,7 +10,7 @@ namespace ASP.NETCoreWebApplication1.Controllers;
 [Authorize()]
 [Produces("application/json")]
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/controllers/[controller]")]
 [DisplayName("Texas_Holdem")]
 internal class TexasHoldemController : ControllerBase
 {
