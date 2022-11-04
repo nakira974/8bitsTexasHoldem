@@ -18,9 +18,9 @@ internal class TexasHoldemController : ControllerBase
 {
     private readonly ILogger<TexasHoldemController>                                           _logger;
     private readonly IOptions<TexasHoldemConfiguration>                                       _configuration;
-    private readonly IGameService<IPokerGameService<IPokerGameService<Services.TexasHoldem>>> _pokerGameService;
+    private readonly IGameService<PokerServiceBase<PokerServiceBase<Services.TexasHoldem>>> _pokerGameService;
 
-    public TexasHoldemController(ILogger<TexasHoldemController> logger, IOptions<TexasHoldemConfiguration> configuration, IGameService<IPokerGameService<IPokerGameService<Services.TexasHoldem>>> pokerGameService)
+    public TexasHoldemController(ILogger<TexasHoldemController> logger, IOptions<TexasHoldemConfiguration> configuration, IGameService<PokerServiceBase<PokerServiceBase<Services.TexasHoldem>>> pokerGameService)
     {
         _logger = logger;
         _configuration = configuration;

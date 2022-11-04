@@ -20,7 +20,7 @@ public class TexasHoldemHub : Hub
     private readonly ApplicationDbContext               _applicationDbContext;
     private          IEnumerable<Player>                Players { get; set; }
 
-    public TexasHoldemHub(IGameService<IPokerGameService<IPokerGameService<Services.TexasHoldem>>> texasHoldemService, ILogger<TexasHoldemHub> logger, ApplicationDbContext applicationDbContext)
+    public TexasHoldemHub(IGameService<PokerServiceBase<PokerServiceBase<Services.TexasHoldem>>> texasHoldemService, ILogger<TexasHoldemHub> logger, ApplicationDbContext applicationDbContext)
     {
         _texasHoldemService = texasHoldemService as TexasHoldemService;
         _logger = logger;

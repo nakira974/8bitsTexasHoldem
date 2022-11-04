@@ -35,7 +35,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 builder.Services.AddSignalR();
 builder.Services.AddTransient<IJsonSerializer, JsonSerializer>();
-builder.Services.AddScoped<IGameService<IPokerGameService<IPokerGameService<ASP.NETCoreWebApplication1.Services.TexasHoldem>>>, TexasHoldemService>();
+builder.Services.AddScoped<IGameService<PokerServiceBase<PokerServiceBase<ASP.NETCoreWebApplication1.Services.TexasHoldem>>>, TexasHoldemService>();
 
 
 builder.Services.AddCors(c =>

@@ -5,22 +5,22 @@ using TexasHoldem.Models.Services;
 
 namespace ASP.NETCoreWebApplication1.Services;
 
-internal sealed class TexasHoldemService : IPokerGameService<TexasHoldem>
+public sealed class TexasHoldemService : PokerServiceBase<TexasHoldem>
 {
-    public TexasHoldemService(ILogger<IGameService<IPokerGameService<IPokerGameService<TexasHoldem>>>> logger)
+    public TexasHoldemService(ILogger<IGameService<PokerServiceBase<PokerServiceBase<TexasHoldem>>>> logger)
     {
         _logger = logger;
         GameServicesImplementation = this;
         Game = new TexasHoldem(_logger);
     }
 
-    public GameBase<IGameService<IPokerGameService<IPokerGameService<TexasHoldem>>>> Game { get; init; }
+    public TexasHoldem Game { get; init; }
 
-    public IGameService<IPokerGameService<IPokerGameService<TexasHoldem>>> GameServicesImplementation { get; }
+    public IGameService<PokerServiceBase<PokerServiceBase<TexasHoldem>>> GameServicesImplementation { get; }
 
-    private readonly ILogger<IGameService<IPokerGameService<IPokerGameService<TexasHoldem>>>> _logger;
+    private readonly ILogger<IGameService<PokerServiceBase<PokerServiceBase<TexasHoldem>>>> _logger;
 
-    public GameBase<IGameService<IPokerGameService<IPokerGameService<TexasHoldem>>>> Start()
+    public GameBase<IGameService<PokerServiceBase<PokerServiceBase<TexasHoldem>>>> Start()
     {
         try
         {
@@ -33,7 +33,7 @@ internal sealed class TexasHoldemService : IPokerGameService<TexasHoldem>
         }
     }
 
-    public async Task<GameBase<IGameService<IPokerGameService<IPokerGameService<TexasHoldem>>>>> StartAsync()
+    public async Task<GameBase<IGameService<PokerServiceBase<PokerServiceBase<TexasHoldem>>>>> StartAsync()
     {
         try
         {
@@ -46,7 +46,7 @@ internal sealed class TexasHoldemService : IPokerGameService<TexasHoldem>
         }
     }
 
-    public GameBase<IGameService<IPokerGameService<IPokerGameService<TexasHoldem>>>> Suspend(double time)
+    public GameBase<IGameService<PokerServiceBase<PokerServiceBase<TexasHoldem>>>> Suspend(double time)
     {
         try
         {
@@ -59,7 +59,7 @@ internal sealed class TexasHoldemService : IPokerGameService<TexasHoldem>
         }
     }
 
-    public async Task<GameBase<IGameService<IPokerGameService<IPokerGameService<TexasHoldem>>>>>
+    public async Task<GameBase<IGameService<PokerServiceBase<PokerServiceBase<TexasHoldem>>>>>
         SuspendAsync(double time)
     {
         try
@@ -73,7 +73,7 @@ internal sealed class TexasHoldemService : IPokerGameService<TexasHoldem>
         }
     }
 
-    public GameBase<IGameService<IPokerGameService<IPokerGameService<TexasHoldem>>>> Finish()
+    public GameBase<IGameService<PokerServiceBase<PokerServiceBase<TexasHoldem>>>> Finish()
     {
         try
         {
@@ -86,7 +86,7 @@ internal sealed class TexasHoldemService : IPokerGameService<TexasHoldem>
         }
     }
 
-    public async Task<GameBase<IGameService<IPokerGameService<IPokerGameService<TexasHoldem>>>>> FinishAsync()
+    public async Task<GameBase<IGameService<PokerServiceBase<PokerServiceBase<TexasHoldem>>>>> FinishAsync()
     {
         try
         {
