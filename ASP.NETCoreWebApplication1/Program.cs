@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
 using ASP.NETCoreWebApplication1.Data;
 using ASP.NETCoreWebApplication1.Models;
-
+using ASP.NETCoreWebApplication1.Services;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -26,7 +26,7 @@ builder.Services.AddAuthentication()
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
-
+builder.Services.AddScoped<IGameService<IPokerGameService<IPokerGameService<TexasHoldem>>>, TexasHoldemService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

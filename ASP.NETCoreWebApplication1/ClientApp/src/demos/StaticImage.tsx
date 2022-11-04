@@ -1,7 +1,7 @@
 ﻿import { OrbitControls, OrthographicCamera } from "@react-three/drei"
 import { Canvas, useFrame, useLoader } from "@react-three/fiber"
 import { useControls } from "leva"
-import { Suspense, useRef } from "react"
+import  { Suspense, useRef } from "react"
 import * as THREE from "three"
 // @ts-ignore
 import bard from "./resources/HEART_ACE.png"
