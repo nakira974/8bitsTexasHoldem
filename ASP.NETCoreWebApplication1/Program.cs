@@ -8,8 +8,10 @@ using ASP.NETCoreWebApplication1.Data;
 using ASP.NETCoreWebApplication1.Hubs;
 using ASP.NETCoreWebApplication1.Models;
 using ASP.NETCoreWebApplication1.Services;
+using Lkhsoft.Utility;
 using TexasHoldem.Models;
 using TexasHoldem.Models.Services;
+using JsonSerializer = Lkhsoft.Utility.JsonSerializer;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -32,6 +34,7 @@ builder.Services.AddAuthentication()
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 builder.Services.AddSignalR();
+builder.Services.AddTransient<IJsonSerializer, JsonSerializer>();
 builder.Services.AddScoped<IGameService<IPokerGameService<IPokerGameService<ASP.NETCoreWebApplication1.Services.TexasHoldem>>>, TexasHoldemService>();
 
 

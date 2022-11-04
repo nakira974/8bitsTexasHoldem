@@ -13,9 +13,7 @@ public class TexasHoldem : GameBase<IGameService<IPokerGameService<IPokerGameSer
         _deck = new CardsDeck ();
         State = TexasHoldemState.Flop;
     }
-    
-    private static readonly int START_ROUND_CARDS_COUNT = 3; 
-    public TexasHoldemState State { get; set; }
+    public                  TexasHoldemState State { get; set; }
     
     internal void NextTurn()
     {
@@ -26,22 +24,27 @@ public class TexasHoldem : GameBase<IGameService<IPokerGameService<IPokerGameSer
             {
                 try
                 {
-                    switch (State)
-                    {
-                        case TexasHoldemState.Flop:
-                            player.HeldCards = new CardsDeck(_deck?.DrawCards(START_ROUND_CARDS_COUNT)!);
-                            break;
-                    }
-
+                    player.HeldCards = State switch
+                                       {
+                                           TexasHoldemState.Flop =>
+                                               new CardsDeck(_deck?.DrawCards(CardsDeck.MAXIMUM_DISTRIBUABLE_CARDS)!),
+                                           TexasHoldemState.River =>
+                                               new CardsDeck(_deck?.DrawCards(CardsDeck.MINIMUM_DISTRIBUABLE_CARDS)!),
+                                           TexasHoldemState.Turn =>
+                                               new CardsDeck(_deck?.DrawCards(CardsDeck.MINIMUM_DISTRIBUABLE_CARDS)!),
+                                           _ => player.HeldCards
+                                       };
                 }
                 catch (InternalPokerGameException e)
                 {
-                    _logger.LogError(e.Message, e);
+                    // ReSharper disable once TemplateIsNotCompileTimeConstantProblem
+                    _logger.LogError($"Error while dealing cards for player {player.UserName}", e);
                 }
             });
         }
         catch (InternalPokerGameException e)
         {
+            // ReSharper disable once TemplateIsNotCompileTimeConstantProblem
             _logger.LogError(e.Message, e);
         }
     }

@@ -3,6 +3,7 @@
 Public Class Card
     <JsonPropertyName("family")>
     Public Property Family As CardType
+
     <JsonPropertyName("number")>
     Public Property Number As CardNumber
 
