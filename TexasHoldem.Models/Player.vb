@@ -10,7 +10,7 @@ Public Class Player
     End Sub
 
     <JsonPropertyName("application_user")>
-    Friend Property User As ApplicationUser
+    Public Property User As ApplicationUser
     <NotMapped>
     <JsonPropertyName("connection_id")>
     Public Property ConnectionId As String

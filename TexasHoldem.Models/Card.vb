@@ -2,11 +2,11 @@
 
 Public Class Card
     <JsonPropertyName("family")>
-    Public Property Family As IPokerGameService(Of ).CardType
+    Public Property Family As CardType
     <JsonPropertyName("number")>
-    Public Property Number As IPokerGameService(Of ).CardNumber
+    Public Property Number As CardNumber
 
-    Public Sub New(ByVal family As IPokerGameService(Of ).CardType, ByVal number As IPokerGameService(Of ).CardNumber)
+    Public Sub New(ByVal family As CardType, ByVal number As CardNumber)
         Family = family
         Number = number
     End Sub

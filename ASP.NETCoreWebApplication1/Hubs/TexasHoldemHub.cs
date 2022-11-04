@@ -6,24 +6,26 @@ using Duende.IdentityServer.EntityFramework.Entities;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using TexasHoldem.Models;
+using TexasHoldem.Models.Services;
 
 namespace ASP.NETCoreWebApplication1.Hubs;
 
 [DisplayName("Texas_Holdem_Hub")]
 public class TexasHoldemHub : Hub
 {
-    private readonly ILogger<TexasHoldemHub> _logger;
-    private readonly TexasHoldemService? _texasHoldemService;
+    private readonly ILogger<TexasHoldemHub>            _logger;
+    private readonly TexasHoldemService?                _texasHoldemService;
     private readonly IOptions<TexasHoldemConfiguration> _configuration;
-    private readonly ApplicationDbContext _applicationDbContext;
-    private IEnumerable<IPokerGameService<IPokerGameService<TexasHoldem>>.Player?> Players { get; set; }
+    private readonly ApplicationDbContext               _applicationDbContext;
+    private          IEnumerable<Player>                Players { get; set; }
 
-    public TexasHoldemHub(IGameService<IPokerGameService<IPokerGameService<TexasHoldem>>> texasHoldemService, ILogger<TexasHoldemHub> logger, ApplicationDbContext applicationDbContext)
+    public TexasHoldemHub(IGameService<IPokerGameService<IPokerGameService<Services.TexasHoldem>>> texasHoldemService, ILogger<TexasHoldemHub> logger, ApplicationDbContext applicationDbContext)
     {
         _texasHoldemService = texasHoldemService as TexasHoldemService;
         _logger = logger;
         _applicationDbContext = applicationDbContext;
-        Players = new List<IPokerGameService<IPokerGameService<TexasHoldem>>.Player?>();
+        Players = new List<Player?>();
     }
 
 
@@ -31,7 +33,7 @@ public class TexasHoldemHub : Hub
     {
         try
         {
-            Players.ToList().Add(new IPokerGameService<IPokerGameService<TexasHoldem>>.Player(connectionId:Context.ConnectionId));
+            Players.ToList().Add(new Player(connectionId:Context.ConnectionId));
         }
         catch (Exception e)
         {

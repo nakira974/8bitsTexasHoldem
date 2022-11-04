@@ -8,12 +8,12 @@
     End Sub
 
     Public Sub New()
-        Dim cardTypes = [Enum].GetValues(GetType(IPokerGameService(Of ).CardType))
-        Dim cardNumbers = [Enum].GetValues(GetType(IPokerGameService(Of ).CardNumber))
+        Dim cardTypes = [Enum].GetValues(GetType(CardType))
+        Dim cardNumbers = [Enum].GetValues(GetType (CardNumber))
 
-        For Each cardType As IPokerGameService(Of ).CardType In cardTypes
+        For Each cardType As CardType In cardTypes
 
-            For Each cardNumber As IPokerGameService(Of ).CardNumber In cardNumbers
+            For Each cardNumber As CardNumber In cardNumbers
                 Add(New Card(cardType, cardNumber))
             Next
         Next
@@ -28,7 +28,7 @@
         End Try
     End Function
 
-    Public Function Shuffle() As CardsDeck?
+    Public Function Shuffle() As CardsDeck
         Return TryCast(Me.OrderBy(Function(x) Guid.NewGuid()).Take(Me.Count).ToList(), CardsDeck)
     End Function
 

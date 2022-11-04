@@ -9,6 +9,7 @@ using ASP.NETCoreWebApplication1.Hubs;
 using ASP.NETCoreWebApplication1.Models;
 using ASP.NETCoreWebApplication1.Services;
 using TexasHoldem.Models;
+using TexasHoldem.Models.Services;
 
 
 var builder = WebApplication.CreateBuilder(args);

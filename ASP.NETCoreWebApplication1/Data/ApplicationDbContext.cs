@@ -2,8 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Duende.IdentityServer.EntityFramework.Options;
-using ASP.NETCoreWebApplication1.Models;
-using ASP.NETCoreWebApplication1.Services;
+using TexasHoldem.Models;
 
 namespace ASP.NETCoreWebApplication1.Data;
 
@@ -14,5 +13,5 @@ public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>
     {
     }
     
-    public DbSet<IPokerGameService<IPokerGameService<TexasHoldem>>.Player> Players { get; set; }
+    public DbSet<Player> Players { get; set; }
 }
