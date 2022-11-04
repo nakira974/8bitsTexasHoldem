@@ -38,11 +38,7 @@ public interface IPokerGameService<T> : IGameService<IPokerGameService<IPokerGam
     {
         return await GameServicesImplementation.FinishAsync();
     }
-
-    public new async Task<bool> DisconnectAsync(HubConnectionContext hubConnectionContext)
-    {
-       return await GameServicesImplementation.DisconnectAsync(hubConnectionContext);
-    }
+    
     
 
 

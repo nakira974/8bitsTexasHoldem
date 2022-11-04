@@ -96,23 +96,4 @@ internal sealed class TexasHoldemService : IPokerGameService<TexasHoldem>
             throw;
         }
     }
-
-    public async Task<bool> DisconnectAsync(HubConnectionContext hubConnectionContext)
-    {
-        var result = false;
-        try
-        {
-            await hubConnectionContext.WriteAsync(CloseMessage.Empty);
-            hubConnectionContext.Abort();
-            result = true;
-        }
-        catch (Exception e)
-        {
-            // ReSharper disable once TemplateIsNotCompileTimeConstantProblem
-            _logger.LogError($"Disconnection error for client {hubConnectionContext.User.Identity?.Name}", e);
-            result = false;
-        }
-
-        return result;
-    }
 }

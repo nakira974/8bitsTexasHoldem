@@ -72,4 +72,17 @@ public class TexasHoldemHub : Hub
             Context.Abort();
         }
     }
+
+    public async Task Start()
+    {
+        try
+        {
+            await _texasHoldemService.StartAsync();
+        }
+        catch (Exception e)
+        {
+            _logger.LogError($"Error on sending user {Context.ConnectionId} information");
+            Context.Abort();
+        }
+    }
 }

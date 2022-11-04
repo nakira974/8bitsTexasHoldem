@@ -18,5 +18,4 @@ public interface IGameService<T>
 
     public Task<GameBase<IGameService<T>>> FinishAsync();
 
-    public Task<bool> DisconnectAsync(HubConnectionContext hubConnectionContext);
 }
