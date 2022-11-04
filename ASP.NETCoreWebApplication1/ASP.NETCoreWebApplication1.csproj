@@ -69,6 +69,9 @@
     <ItemGroup>
       <Folder Include="Hubs" />
     </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\TexasHoldem.Models\TexasHoldem.Models.vbproj" />
+    </ItemGroup>
 
     <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
         <!-- Ensure Node.js is installed -->

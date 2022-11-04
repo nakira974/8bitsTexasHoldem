@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASP.NETCoreWebApplication1", "ASP.NETCoreWebApplication1\ASP.NETCoreWebApplication1.csproj", "{7B364292-90AA-4985-B63F-D9EC4C8E6296}"
 EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "TexasHoldem.Models", "TexasHoldem.Models\TexasHoldem.Models.vbproj", "{A7036ED6-3AD8-47C6-849D-DD9203B7DB42}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{7B364292-90AA-4985-B63F-D9EC4C8E6296}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7B364292-90AA-4985-B63F-D9EC4C8E6296}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7B364292-90AA-4985-B63F-D9EC4C8E6296}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7036ED6-3AD8-47C6-849D-DD9203B7DB42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7036ED6-3AD8-47C6-849D-DD9203B7DB42}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7036ED6-3AD8-47C6-849D-DD9203B7DB42}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7036ED6-3AD8-47C6-849D-DD9203B7DB42}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

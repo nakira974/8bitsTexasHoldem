@@ -34,7 +34,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                 <Route path='/measure_simulator' element={<MeasureComponent measures={getMeasures()}/>}/>
                 
                 <Route path='/texas_holdem' element={<MySprite/>}/>
-
+                <ApiAuthorizationRoutes/>
                 <Route path={ApplicationPaths.ApiAuthorizationPrefix} element={<ApiAuthorizationRoutes/>}/>
                 
             </Routes>

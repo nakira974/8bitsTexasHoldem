@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using Microsoft.AspNetCore.SignalR.Protocol;
+using TexasHoldem.Models;
+using TexasHoldem.Models.Services;
 
 namespace ASP.NETCoreWebApplication1.Services;
 
