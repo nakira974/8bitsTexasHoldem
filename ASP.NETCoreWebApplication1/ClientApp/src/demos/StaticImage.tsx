@@ -9,10 +9,12 @@ import bard from "./resources/HEART_ACE.png"
 import texture02 from "./resources/OTHER_REVERSEFACE.png"
 import {Texture} from "three";
 import {CardsDeck} from "../models/CardsDeck";
+import {TexasHoldem} from "../models/TexasHoldem";
 
 
 
 const TexturedQuad = ({ scale, position }) => {
+    let game = new TexasHoldem(4);
     let deck = new CardsDeck("CARDS_DECK", "./resources/OTHER_CARDSDECK.png")
 
     const group = useRef()

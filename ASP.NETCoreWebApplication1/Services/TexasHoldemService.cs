@@ -5,7 +5,7 @@ using TexasHoldem.Models.Services;
 
 namespace ASP.NETCoreWebApplication1.Services;
 
-public sealed class TexasHoldemService : PokerServiceBase<TexasHoldem>
+internal class TexasHoldemService : IGameService<PokerServiceBase<PokerServiceBase<TexasHoldem>>>
 {
     public TexasHoldemService(ILogger<IGameService<PokerServiceBase<PokerServiceBase<TexasHoldem>>>> logger)
     {
@@ -20,7 +20,7 @@ public sealed class TexasHoldemService : PokerServiceBase<TexasHoldem>
 
     private readonly ILogger<IGameService<PokerServiceBase<PokerServiceBase<TexasHoldem>>>> _logger;
 
-    public GameBase<IGameService<PokerServiceBase<PokerServiceBase<TexasHoldem>>>> Start()
+    public new GameBase<IGameService<PokerServiceBase<PokerServiceBase<TexasHoldem>>>> Start()
     {
         try
         {
@@ -33,7 +33,7 @@ public sealed class TexasHoldemService : PokerServiceBase<TexasHoldem>
         }
     }
 
-    public async Task<GameBase<IGameService<PokerServiceBase<PokerServiceBase<TexasHoldem>>>>> StartAsync()
+    public new async Task<GameBase<IGameService<PokerServiceBase<PokerServiceBase<TexasHoldem>>>>> StartAsync()
     {
         try
         {
@@ -46,7 +46,7 @@ public sealed class TexasHoldemService : PokerServiceBase<TexasHoldem>
         }
     }
 
-    public GameBase<IGameService<PokerServiceBase<PokerServiceBase<TexasHoldem>>>> Suspend(double time)
+    public new GameBase<IGameService<PokerServiceBase<PokerServiceBase<TexasHoldem>>>> Suspend(double time)
     {
         try
         {
@@ -73,7 +73,7 @@ public sealed class TexasHoldemService : PokerServiceBase<TexasHoldem>
         }
     }
 
-    public GameBase<IGameService<PokerServiceBase<PokerServiceBase<TexasHoldem>>>> Finish()
+    public new GameBase<IGameService<PokerServiceBase<PokerServiceBase<TexasHoldem>>>> Finish()
     {
         try
         {
@@ -86,7 +86,7 @@ public sealed class TexasHoldemService : PokerServiceBase<TexasHoldem>
         }
     }
 
-    public async Task<GameBase<IGameService<PokerServiceBase<PokerServiceBase<TexasHoldem>>>>> FinishAsync()
+    public new async Task<GameBase<IGameService<PokerServiceBase<PokerServiceBase<TexasHoldem>>>>> FinishAsync()
     {
         try
         {

@@ -3,6 +3,8 @@ using ASP.NETCoreWebApplication1.Data;
 using ASP.NETCoreWebApplication1.Models;
 using ASP.NETCoreWebApplication1.Services;
 using Duende.IdentityServer.EntityFramework.Entities;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -11,20 +13,20 @@ using TexasHoldem.Models.Services;
 
 namespace ASP.NETCoreWebApplication1.Hubs;
 
-[DisplayName("Texas_Holdem_Hub")]
 public class TexasHoldemHub : Hub
 {
     private readonly ILogger<TexasHoldemHub>            _logger;
     private readonly TexasHoldemService?                _texasHoldemService;
     private readonly IOptions<TexasHoldemConfiguration> _configuration;
     private readonly ApplicationDbContext               _applicationDbContext;
-    private          IEnumerable<Player>                Players { get; set; }
-
-    public TexasHoldemHub(IGameService<PokerServiceBase<PokerServiceBase<Services.TexasHoldem>>> texasHoldemService, ILogger<TexasHoldemHub> logger, ApplicationDbContext applicationDbContext)
+    private          List<Player?> Players { get; set; }
+    
+    public TexasHoldemHub(IGameService<PokerServiceBase<PokerServiceBase<Services.TexasHoldem>>> texasHoldemService, ILogger<TexasHoldemHub> logger, ApplicationDbContext applicationDbContext, IOptions<TexasHoldemConfiguration> configuration)
     {
         _texasHoldemService = texasHoldemService as TexasHoldemService;
         _logger = logger;
         _applicationDbContext = applicationDbContext;
+        _configuration = configuration;
         Players = new List<Player?>();
     }
 
@@ -52,7 +54,7 @@ public class TexasHoldemHub : Hub
         }
         catch (Exception e)
         {
-            _logger.LogError($"Error on connection, client {Context.ConnectionId} has been aborted");
+            _logger.LogError($"Error on connection, client {Context.ConnectionId} has been aborted", e);
             Context.Abort();
         }
         return base.OnDisconnectedAsync(exception);
@@ -70,7 +72,7 @@ public class TexasHoldemHub : Hub
         }
         catch (Exception e)
         {
-            _logger.LogError($"Error on sending user {Context.ConnectionId} information");
+            _logger.LogError($"Error on sending user {Context.ConnectionId} information", e);
             Context.Abort();
         }
     }
@@ -79,7 +81,7 @@ public class TexasHoldemHub : Hub
     {
         try
         {
-            await _texasHoldemService.StartAsync();
+            await _texasHoldemService?.StartAsync()!;
         }
         catch (Exception e)
         {
