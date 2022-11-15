@@ -33,7 +33,7 @@ export class TexasHoldem extends GameBase{
      */
     constructor(maximumAllowedPlayerCount: number) {
         super("Texas_Holdem", maximumAllowedPlayerCount);
-        let deck = new CardsDeck("Texas_Holdem_Deck", "");
+        this.deck = new CardsDeck("Texas_Holdem_Deck", "./resources/OTHER_CARDSDECK.png");
     }
     
 }

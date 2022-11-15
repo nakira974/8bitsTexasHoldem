@@ -1,7 +1,8 @@
 import {Guid} from "guid-typescript";
 import * as signalR from "@microsoft/signalr";
-import {HubConnection, LogLevel} from "@microsoft/signalr";
+import {HubConnection, ILogger, LogLevel} from "@microsoft/signalr";
 import {ConsoleLogger} from "@microsoft/signalr/dist/esm/Utils";
+import authService from '../components/api-authorization/AuthorizeService'
 
 /**
  * @author nakira974
@@ -57,19 +58,26 @@ export abstract class GameBase {
      * @param namePrefix : string Prefix of the instance name
      * @param maximumAllowedPlayerCount : number Maximum player count allowed for a single game
      */
-    protected constructor(namePrefix : string , maximumAllowedPlayerCount : number) {
+    protected  constructor(namePrefix: string, maximumAllowedPlayerCount: number) {
         this._maximumPlayerCount = maximumAllowedPlayerCount;
         this._turn = 0;
-        this._name = namePrefix+"_"+Guid.create().toString();
-        let url : string = "https://localhost:7129/api/hubs/"+namePrefix; 
+        this._name = namePrefix + "_" + Guid.create().toString();
+        let url: string = "https://localhost:7129/api/hubs/" + namePrefix;
         let logger = new ConsoleLogger(signalR.LogLevel.Trace);
-        
-        
+        let token :string = "";
+        authService.getAccessToken().then(t=> token = t);
+
         this.hubConnection = new signalR.HubConnectionBuilder()
-            .withUrl(url, { 
+            .withUrl(url, {
                 transport: signalR.HttpTransportType.WebSockets,
-                logMessageContent : true,
-                withCredentials : false,
+                logMessageContent: true,
+                httpClient: new HttpClientFactory(logger, namePrefix),
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    "Access-Control-Allow-Origin": "http://localhost:7129/api/hubs/" + namePrefix,
+                    "User-Agent": "React-SignalR-Client", 
+                    "Connection": "keep-alive"
+                }
             })
             .configureLogging(logger)
             .build();
@@ -78,11 +86,11 @@ export abstract class GameBase {
         this.hubConnection.start().then(a => {
             // Once started, invokes the sendConnectionId in our ChatHub inside our ASP.NET Core application.
             if (this.hubConnection.connectionId) {
-                this.hubConnection.invoke("SetUserInfo", 0).then(r => logger.log(LogLevel.Information, "Player has set info into game's hub")) ;
+                this.hubConnection.invoke("SetUserInfo", 0).then(r => logger.log(LogLevel.Information, "Player has set info into game's hub"));
             }
-        })      
+        })
             .catch((err) => console.log(`Error while starting connection: ${err}`));
-        
+
     }
     /**
      * @description Name of the GameBase instance
@@ -134,5 +142,22 @@ export abstract class GameBase {
      * @description SignalR connection to the Game's Hub
      */
     public readonly hubConnection : HubConnection;
+    
+}
+
+class HttpClientFactory extends signalR.DefaultHttpClient {
+    
+    private readonly _hubName : string;
+    
+    public send(request: signalR.HttpRequest): Promise<signalR.HttpResponse> {
+        //request.headers = { ...request.headers, "Access-Control-Allow-Origin": "http://localhost:7129/api/hubs/"+this._hubName };
+        return super.send(request);
+    }
+
+    constructor(logger: ILogger, hubName : string) {
+        super(logger);
+        this._hubName = hubName;
+    }
+    
     
 }

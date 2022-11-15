@@ -15,7 +15,6 @@ import {TexasHoldem} from "../models/TexasHoldem";
 
 const TexturedQuad = ({ scale, position }) => {
     let game = new TexasHoldem(4);
-    let deck = new CardsDeck("CARDS_DECK", "./resources/OTHER_CARDSDECK.png")
 
     const group = useRef()
 

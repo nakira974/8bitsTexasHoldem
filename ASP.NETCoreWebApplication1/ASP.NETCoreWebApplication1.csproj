@@ -54,10 +54,6 @@
     <ItemGroup>
       <TypeScriptCompile Include="ClientApp\scripts\AsepriteLoader.ts" />
       <TypeScriptCompile Include="ClientApp\src\App.tsx" />
-      <TypeScriptCompile Include="ClientApp\src\components\api-authorization\ApiAuthorizationRoutes.tsx" />
-      <TypeScriptCompile Include="ClientApp\src\components\api-authorization\Login.tsx" />
-      <TypeScriptCompile Include="ClientApp\src\components\api-authorization\LoginMenu.tsx" />
-      <TypeScriptCompile Include="ClientApp\src\components\api-authorization\Logout.tsx" />
       <TypeScriptCompile Include="ClientApp\src\components\AsepriteAssetLoader.tsx" />
       <TypeScriptCompile Include="ClientApp\src\components\RoentgenGenerator.tsx" />
       <TypeScriptCompile Include="ClientApp\src\demos\StaticImage.tsx" />

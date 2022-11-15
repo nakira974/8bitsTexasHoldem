@@ -7,6 +7,7 @@ const target = env.ASPNETCORE_HTTPS_PORT ? `https://localhost:${env.ASPNETCORE_H
 const context =  [
   "/weatherforecast",
   "/api/hubs/Texas_Holdem",
+  "/api/hubs/Texas_Holdem/negociate",
   "/_configuration",
   "/.well-known",
   "/Identity",
@@ -21,7 +22,6 @@ module.exports = function(app) {
     secure: false,
     headers: {
       Connection: 'Keep-Alive',
-      "Access-Control-Allow-Origin" : "http://localhost:7129/api/hubs"
     }
   });
 

@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Http.Connections;
 using Microsoft.AspNetCore.HttpLogging;
 using Serilog;
+using TexasHoldem.Models;
 using TexasHoldem.Models.Services;
 using JsonSerializer = Lkhsoft.Utility.JsonSerializer;
 using WebSocketOptions = Microsoft.AspNetCore.Builder.WebSocketOptions;
@@ -32,7 +33,7 @@ try
     
     builder.Services.AddHttpLogging(options =>
     {
-        options.LoggingFields = HttpLoggingFields.All ;
+        options.LoggingFields = HttpLoggingFields.RequestProtocol| HttpLoggingFields.RequestHeaders | HttpLoggingFields.RequestBody | HttpLoggingFields.Response ;
     });
     
 // Add services to the container.
@@ -41,11 +42,11 @@ try
         options.UseSqlite(connectionString));
     builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-    builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
         .AddEntityFrameworkStores<ApplicationDbContext>();
 
     builder.Services.AddIdentityServer()
-        .AddApiAuthorization<IdentityUser, ApplicationDbContext>();
+        .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
 
     builder.Services.AddAuthentication()
         .AddIdentityServerJwt();

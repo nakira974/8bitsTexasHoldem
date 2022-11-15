@@ -13,5 +13,20 @@ public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>
     {
     }
     
+    public DbSet<ApplicationUser> AspNetUsers { get; set; }
     public DbSet<Player> Players { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+        
+        modelBuilder.Entity<ApplicationUser>()
+            .HasOne(e => e.PlayerAccount)
+            .WithOne(e => e.User);
+        
+        modelBuilder.Entity<Player>()
+            .HasOne(e => e.User)
+            .WithOne(e => e.PlayerAccount)
+            .OnDelete(DeleteBehavior.Cascade);
+    }
 }

@@ -1,6 +1,8 @@
-﻿Imports System.ComponentModel.DataAnnotations.Schema
+﻿Imports System.ComponentModel.DataAnnotations
+Imports System.ComponentModel.DataAnnotations.Schema
 Imports System.Text.Json.Serialization
 
+<Table("Players")>
 Public Class Player
     Public Sub New()
     End Sub
@@ -9,6 +11,8 @@ Public Class Player
         ConnectionId = connectionId
     End Sub
 
+    <Required>
+    <ForeignKey("User_Player_FK")>
     <JsonPropertyName("application_user")>
     Public Property User As ApplicationUser
 
@@ -16,15 +20,20 @@ Public Class Player
     <JsonPropertyName("connection_id")>
     Public Property ConnectionId As String
 
-    <JsonPropertyName("user_id")>
+    <Key>
+    <DatabaseGenerated(DatabaseGeneratedOption.Identity)>
+    <JsonPropertyName("player_id")>
     Public Property Id As Integer
 
+    <Required>
     <JsonPropertyName("username")>
     Public Property UserName As String
 
+    <NotMapped>
     <JsonPropertyName("held_cards")>
     Public Property HeldCards As IEnumerable(Of Card)
 
+    <NotMapped>
     <JsonPropertyName("folded")>
     Public Property Folded As Boolean
 End Class
