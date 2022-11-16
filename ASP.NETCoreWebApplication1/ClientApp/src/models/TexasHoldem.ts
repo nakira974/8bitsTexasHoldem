@@ -1,5 +1,6 @@
 import {GameBase} from "./GameBase";
 import {CardsDeck} from "./CardsDeck";
+import {HubConnectionState, LogLevel} from "@microsoft/signalr";
 
 
 /**
@@ -34,6 +35,11 @@ export class TexasHoldem extends GameBase{
     constructor(maximumAllowedPlayerCount: number) {
         super("Texas_Holdem", maximumAllowedPlayerCount);
         this.deck = new CardsDeck("Texas_Holdem_Deck", "./resources/OTHER_CARDSDECK.png");
+        
+        this.hubConnection.send("SetUserInfo", "0d0a96c0-14cd-421b-8313-0ec874761d70")
+            .then(r => this.logger.log(LogLevel.Debug, "Player has set info into game's hub"))
+            .catch((err) => this.logger.log(LogLevel.Critical, `Error while sending user info connection: ${err}`));
+        
     }
     
 }

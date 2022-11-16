@@ -1,6 +1,6 @@
 import {Guid} from "guid-typescript";
 import * as signalR from "@microsoft/signalr";
-import {HubConnection, ILogger, LogLevel} from "@microsoft/signalr";
+import {HubConnection, HubConnectionState, IHttpConnectionOptions, ILogger, LogLevel} from "@microsoft/signalr";
 import {ConsoleLogger} from "@microsoft/signalr/dist/esm/Utils";
 import authService from '../components/api-authorization/AuthorizeService'
 
@@ -11,6 +11,7 @@ import authService from '../components/api-authorization/AuthorizeService'
  **/
 export abstract class GameBase {
 
+    public logger : ILogger;
     /**
      * @description Get the current round count of the game
      */
@@ -63,34 +64,36 @@ export abstract class GameBase {
         this._turn = 0;
         this._name = namePrefix + "_" + Guid.create().toString();
         let url: string = "https://localhost:7129/api/hubs/" + namePrefix;
-        let logger = new ConsoleLogger(signalR.LogLevel.Trace);
+        this.logger = new ConsoleLogger(signalR.LogLevel.Debug);
         let token :string = "";
-        authService.getAccessToken().then(t=> token = t);
+        
 
+        const options: IHttpConnectionOptions = {
+            accessTokenFactory: () => {
+                return authService.getAccessToken().then(t=> token = t);
+            },
+            headers:{
+                "Access-Control-Allow-Origin": "*", 
+                "User-Agent": "React-SignalR-Client", 
+                "Connection": "keep-alive"
+            },
+            transport: signalR.HttpTransportType.WebSockets,
+            logMessageContent: true,
+            httpClient: new HttpClientFactory(this.logger, namePrefix),
+            logger : this.logger,
+            withCredentials : true,
+            skipNegotiation : true
+        };
+        
         this.hubConnection = new signalR.HubConnectionBuilder()
-            .withUrl(url, {
-                transport: signalR.HttpTransportType.WebSockets,
-                logMessageContent: true,
-                httpClient: new HttpClientFactory(logger, namePrefix),
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    "Access-Control-Allow-Origin": "http://localhost:7129/api/hubs/" + namePrefix,
-                    "User-Agent": "React-SignalR-Client", 
-                    "Connection": "keep-alive"
-                }
-            })
-            .configureLogging(logger)
+            .withUrl(url,options)
+            .configureLogging(this.logger)
             .build();
 
         // Starts the SignalR connection
-        this.hubConnection.start().then(a => {
-            // Once started, invokes the sendConnectionId in our ChatHub inside our ASP.NET Core application.
-            if (this.hubConnection.connectionId) {
-                this.hubConnection.invoke("SetUserInfo", 0).then(r => logger.log(LogLevel.Information, "Player has set info into game's hub"));
-            }
-        })
-            .catch((err) => console.log(`Error while starting connection: ${err}`));
-
+        this.hubConnection.start()
+            .then(r=> this.logger.log(LogLevel.Debug, "User is now connected to '"+namePrefix+"' hub"))
+            .catch((err) => this.logger.log(LogLevel.Critical, `Error while starting connection: ${err}`));
     }
     /**
      * @description Name of the GameBase instance

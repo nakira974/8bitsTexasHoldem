@@ -3,6 +3,7 @@ using ASP.NETCoreWebApplication1.Data;
 using ASP.NETCoreWebApplication1.Models;
 using ASP.NETCoreWebApplication1.Services;
 using Duende.IdentityServer.EntityFramework.Entities;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.SignalR;
@@ -42,7 +43,7 @@ public class TexasHoldemHub : Hub
             _logger.LogError($"Error on connection, client {Context.ConnectionId} has been aborted");
             Context.Abort();
         }
-        
+
         return base.OnConnectedAsync();
     }
 
@@ -57,15 +58,18 @@ public class TexasHoldemHub : Hub
             _logger.LogError($"Error on connection, client {Context.ConnectionId} has been aborted", e);
             Context.Abort();
         }
+        
+        _logger.LogInformation($"User {Context.ConnectionId} has been disconnected from Texas_Holdem hub");
+        
         return base.OnDisconnectedAsync(exception);
     }
 
 
-    public async Task SetUserInfo(int userId)
+    public async Task SetUserInfo(string userId)
     {
         try
         {
-            var storedPlayer =  await _applicationDbContext.Players.Include(player => player.User).Where(x=>x.Id.Equals(userId)).FirstOrDefaultAsync();
+            var storedPlayer =  await _applicationDbContext.Players.Include(player => player.User).Where(x=>x.User.Id.Equals(userId)).FirstOrDefaultAsync();
             var currentPlayer= Players.Where(x => x != null && x.ConnectionId.Equals(Context.ConnectionId)).Select(x => x).FirstOrDefault();
             var index = Players.ToList().IndexOf(currentPlayer!);
             Players.ToList()[index] = index != -1 ? storedPlayer : throw new ArgumentException($"Player {Context.ConnectionId} doesn't exists in the hub's player list");

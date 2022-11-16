@@ -15,73 +15,78 @@ using TexasHoldem.Models;
 using TexasHoldem.Models.Services;
 using JsonSerializer = Lkhsoft.Utility.JsonSerializer;
 using WebSocketOptions = Microsoft.AspNetCore.Builder.WebSocketOptions;
+// ReSharper disable TemplateIsNotCompileTimeConstantProblem
 
 
 try
 {
     var builder = WebApplication.CreateBuilder(args);
 
-    
+    #region Logging
     Log.Logger = new LoggerConfiguration()
-        .MinimumLevel.Verbose()
-        .WriteTo.Console()
-        //.WriteTo.File("logs/rumble-.txt", rollingInterval: RollingInterval.Day)
-        .CreateLogger();
+                .MinimumLevel.Verbose()
+                .WriteTo.Console()
+                 //.WriteTo.File("logs/rumble-.txt", rollingInterval: RollingInterval.Day)
+                .CreateLogger();
     
     builder.Logging.ClearProviders();
     builder.Logging.AddSerilog(Log.Logger);
     
     builder.Services.AddHttpLogging(options =>
-    {
-        options.LoggingFields = HttpLoggingFields.RequestProtocol| HttpLoggingFields.RequestHeaders | HttpLoggingFields.RequestBody | HttpLoggingFields.Response ;
-    });
-    
-// Add services to the container.
+                                    {
+                                        options.LoggingFields = HttpLoggingFields.RequestProtocol| HttpLoggingFields.RequestHeaders | HttpLoggingFields.RequestBody | HttpLoggingFields.Response ;
+                                    });
+    #endregion
+
+    #region EFCORE
+
+    // Add services to the container.
     var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
     builder.Services.AddDbContext<ApplicationDbContext>(options =>
-        options.UseSqlite(connectionString));
+                                                            options.UseSqlite(connectionString));
     builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
     builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
-        .AddEntityFrameworkStores<ApplicationDbContext>();
+           .AddEntityFrameworkStores<ApplicationDbContext>();
 
     builder.Services.AddIdentityServer()
-        .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
+           .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
+
+    #endregion
+    
+    #region RegisteredServices
 
     builder.Services.AddAuthentication()
-        .AddIdentityServerJwt();
-
-    /*
-    builder.Services.AddCors(options =>
-    {
-        options.
-    });*/
+           .AddIdentityServerJwt();
     builder.Services.AddControllersWithViews();
     builder.Services.AddRazorPages();
     builder.Services.AddSignalR();
     builder.Services.AddTransient<IJsonSerializer, JsonSerializer>();
     builder.Services
-        .AddScoped<IGameService<PokerServiceBase<PokerServiceBase<ASP.NETCoreWebApplication1.Services.TexasHoldem>>>,
-            TexasHoldemService>();
-    
+           .AddScoped<IGameService<PokerServiceBase<PokerServiceBase<ASP.NETCoreWebApplication1.Services.TexasHoldem>>>,
+                TexasHoldemService>();
+
     builder.Services.AddCors(options =>
-    {
-        options.AddPolicy("PokerGamePolicy", builder => builder.WithOrigins("http://localhost:7129/api/hubs")
-            .AllowAnyHeader()
-            .AllowAnyMethod()
-            .AllowCredentials()
-            .SetIsOriginAllowed((host) => true));
-    });
+                             {
+                                 options.AddPolicy("GameHubPolicy", corsPolicyBuilder => corsPolicyBuilder.WithOrigins("https://localhost:44423")
+                                                                  .AllowAnyHeader()
+                                                                  .AllowAnyMethod()
+                                                                  .AllowCredentials()
+                                                                  .SetIsOriginAllowed((host) => true));
+                             });
 
     builder.Services.AddControllers()
-        .AddJsonOptions(options =>
-        {
-            options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
-            options.JsonSerializerOptions.WriteIndented = true;
-            options.JsonSerializerOptions.AllowTrailingCommas = false;
-            options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
-        });
+           .AddJsonOptions(options =>
+                           {
+                               options.JsonSerializerOptions.ReferenceHandler     = ReferenceHandler.Preserve;
+                               options.JsonSerializerOptions.WriteIndented        = true;
+                               options.JsonSerializerOptions.AllowTrailingCommas  = false;
+                               options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+                           });
 
+    #endregion
+    
+    #region AppConfiguration
 
     var app = builder.Build();
 
@@ -101,22 +106,29 @@ try
     app.UseAuthorization();
 
     app.MapControllerRoute(
-        "default",
-        "{controller}/{action=Index}/{id?}");
+                           "default",
+                           "{controller}/{action=Index}/{id?}");
     app.MapRazorPages();
 
     app.MapFallbackToFile("index.html");
     
-    app.MapHub<TexasHoldemHub>("api/hubs/Texas_Holdem", options =>
-    {
-        options.Transports = HttpTransportType.WebSockets;
-    });
-
+    app.UseEndpoints(endpoints =>
+                     {
+                         endpoints.MapHub<TexasHoldemHub>("/api/hubs/Texas_Holdem", options =>
+                                                          {
+                                                              options.Transports = HttpTransportType.WebSockets;
+                                                              options.CloseOnAuthenticationExpiration = true;
+                                                          });
+                     });
+    
     app.UseHttpLogging();
-
+    
+    app.UseCors("GameHubPolicy");
+    #endregion
+    
     app.Run();
 }
 catch (Exception e)
 {
-    Console.WriteLine(e);
+    Log.Logger.Error(e, e.Message);
 }
